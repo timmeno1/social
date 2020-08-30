@@ -10,19 +10,4 @@
   grid-template-columns: 2fr 10fr;
 }
 
-.header {
-  grid-area:h;
-  background-color: #fff8b1;
-}
-.header img {
-  width:100px;
-  height:100px;
-}
-.nav {
-  grid-area:n;
-  background-color: #868161;
-}
-.profile {
-  grid-area:c;
-  background-color: #e7ffcc;
-}
+

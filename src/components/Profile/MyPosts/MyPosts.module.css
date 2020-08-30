@@ -1,0 +1,12 @@
+.posts {
+    font-size: 1.05em;
+    margin-left:1em;
+}
+.header {
+    font-size: 1.4em;
+    margin:0.5em;
+    /*text-transform: capitalize;*/
+}
+.newPost {
+    margin:0.5em 0.5em 0.5em 25px;
+}

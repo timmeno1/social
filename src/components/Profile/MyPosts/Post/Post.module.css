@@ -1,0 +1,27 @@
+.item {
+    font-size:1.05em;
+    color: darkblue;
+    margin-bottom: 0.2em;
+}
+
+.item img {
+    width:50px;
+    border-radius: 50%;
+}
+
+.like span{
+    color:deeppink;
+
+}
+
+.like span.counter {
+    display:inline-block;
+    font-size: 12px;
+    line-height:20px;
+    border:1px solid gray;
+    border-radius: 20px;
+    color:darkgray;
+    width:20px;
+    height:20px;
+    text-align: center;
+}
