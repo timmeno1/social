@@ -1,0 +1,46 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
+
+.dialogsItems {
+    padding: 10px;
+}
+
+.item a {
+    color: darkslategray;
+}
+.dialogsItems .active a {
+    color: #ff7f50;
+}
+
+.messages {
+    padding: 10px;
+}
+
+.message {
+    background-color: #dcd4d4;
+    padding:5px;
+    border-radius:5px;
+    min-width:100px;
+    max-width:400px;
+    display:inline-block;
+}
+
+.right {
+    float:right;
+    background-color: darkslategray;
+    color: white;
+}
+
+
+.dialogs ul {
+    list-style: none;
+    display:grid;
+}
+
+.dialogs li {
+    margin:5px;
+    display:block;
+}
+

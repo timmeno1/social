@@ -8,5 +8,9 @@
     /*text-transform: capitalize;*/
 }
 .newPost {
-    margin:0.5em 0.5em 0.5em 25px;
+    margin:0.5em;
+}
+
+.postsBlock {
+    padding: 10px;
 }
