@@ -1,5 +1,5 @@
 import css from "./MyPosts.module.css";
-import React, {useRef} from "react";
+import React from "react";
 import Post from "./Post/Post";
 
 

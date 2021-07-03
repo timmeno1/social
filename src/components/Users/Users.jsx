@@ -1,19 +1,54 @@
 import React from 'react'
 import axios from "axios";
-import userPhoto from "../../assets/img/user.jpg"
+import userPhoto from "../../assets/img/user.png"
+import css from './Users.module.css'
 
 class Users extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
 
+        this.currentPage = this.props.pagination.currentPage
+        this.totalPages = []
+        
+        for(let i=1; i<=this.props.pagination.totalPages; i++) {
+            this.totalPages.push(i)
+        }
+    }
+    
+    componentDidMount() {
         axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
             console.log(response)
             this.props.setUsers(response.data.items)
         })
-
     }
+    componentDidUpdate(){
+
+        this.currentPage = this.props.pagination.currentPage
+        this.totalPages = []
+        
+        for(let i=1; i<=this.props.pagination.totalPages; i++) {
+            this.totalPages.push(i)
+        }
+    }
+    
     render () {
         return <div>
+            
+            
+            <div> 
+                <ul className={css.pages}>
+                    {
+                        this.totalPages.map( p => {
+                            return p===this.currentPage 
+                                    ?  <li className={css.page + " "  + css.active }>{p}</li>
+                                    :  <li className={css.page} onClick={(()=>this.props.setPage(p))}>{p}</li>
+                            
+                        })
+                    }
+                </ul>        
+            </div>
+
+
             {
                 this.props.users.map( u => <div key={u.id}>
             <span>

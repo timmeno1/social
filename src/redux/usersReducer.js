@@ -1,10 +1,17 @@
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SET_USERS'
+const SET_USERS = 'SET_USERS';
+const SET_PAGE = 'SET_PAGE';
+
 
 let initialState = {
-    users : []
+    users : [],
+    pagination: {
+        currentPage: 1,
+        totalPages: 20,
+        pageLimit: 10
+    }
 }
 
 const userReducer = (state = initialState, action) => {
@@ -32,8 +39,18 @@ const userReducer = (state = initialState, action) => {
             }
 
         case SET_USERS:
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: [...action.users]}
 
+        case SET_PAGE:
+            let stateCopy = {
+                ...state,
+                pagination: {
+                    ...state.pagination,
+                    currentPage: action.page
+                }
+            }
+            debugger;
+            return stateCopy
 
         default:
             return state
@@ -58,6 +75,13 @@ export const setUsersAC = (users) => {
     return {
         type: SET_USERS,
         users
+    }
+}
+
+export const setPageAC = (page) => {
+    return {
+        type: SET_PAGE,
+        page
     }
 }
 
