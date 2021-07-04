@@ -3,13 +3,14 @@ const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_PAGE = 'SET_PAGE';
+const SET_TOTAL_PAGES = 'SET_TOTAL_PAGES'
 
 
 let initialState = {
     users : [],
     pagination: {
         currentPage: 1,
-        totalPages: 20,
+        totalPages: 1,
         pageLimit: 10
     }
 }
@@ -42,15 +43,23 @@ const userReducer = (state = initialState, action) => {
             return {...state, users: [...action.users]}
 
         case SET_PAGE:
-            let stateCopy = {
+            return {
                 ...state,
                 pagination: {
                     ...state.pagination,
                     currentPage: action.page
                 }
             }
-            debugger;
-            return stateCopy
+
+        case SET_TOTAL_PAGES:
+            debugger
+            return {
+                ...state,
+                pagination: {
+                    ...state.pagination,
+                    totalPages: action.totalPages
+                }
+            }
 
         default:
             return state
@@ -82,6 +91,13 @@ export const setPageAC = (page) => {
     return {
         type: SET_PAGE,
         page
+    }
+}
+
+export const setTotalPagesAC = (totalPages) => {
+    return {
+        type: SET_TOTAL_PAGES,
+        totalPages
     }
 }
 
