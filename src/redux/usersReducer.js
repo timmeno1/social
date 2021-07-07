@@ -4,15 +4,17 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_PAGE = 'SET_PAGE';
 const SET_TOTAL_PAGES = 'SET_TOTAL_PAGES'
+const TOGGLE_ISFETCHING = 'TOGGLE_ISFETCHING'
 
 
 let initialState = {
     users : [],
     pagination: {
         currentPage: 1,
-        totalPages: 1,
+        totalPages: 0,
         pageLimit: 10
-    }
+    },
+    isFetching: false
 }
 
 const userReducer = (state = initialState, action) => {
@@ -52,7 +54,6 @@ const userReducer = (state = initialState, action) => {
             }
 
         case SET_TOTAL_PAGES:
-            debugger
             return {
                 ...state,
                 pagination: {
@@ -60,6 +61,13 @@ const userReducer = (state = initialState, action) => {
                     totalPages: action.totalPages
                 }
             }
+         
+        
+        case TOGGLE_ISFETCHING:
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }    
 
         default:
             return state
@@ -98,6 +106,13 @@ export const setTotalPagesAC = (totalPages) => {
     return {
         type: SET_TOTAL_PAGES,
         totalPages
+    }
+}
+
+export const setIsFetchingAC = (isFetching) => {
+    return {
+        type: TOGGLE_ISFETCHING,
+        isFetching
     }
 }
 

@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 
 const Navbar = () => {
     return (
-        <nav className={css.nav}>
+        <div className={css.nav}>
             <div>
                 <div className={css.item}>
                     <NavLink to="/profile" activeClassName={css.active}>Profile</NavLink>
@@ -32,7 +32,7 @@ const Navbar = () => {
             {/*        return <Friends friends={state.friendsData.friends}/>*/}
             {/*    }}*/}
             {/*</StoreContext.Consumer>*/}
-        </nav>
+        </div>
     );
 }
 

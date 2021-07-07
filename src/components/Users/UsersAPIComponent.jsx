@@ -2,6 +2,7 @@ import React from 'react'
 import axios from "axios";
 import userPhoto from "../../assets/img/user.png"
 import css from './Users.module.css'
+import {Preloader} from './Preloader'
 
 
 
@@ -33,10 +34,15 @@ let Users = (props) => {
 }
 
 class UsersApiComponent extends React.Component {
-    
+
     componentDidMount() {
+
+        this.props.setIsFetching(true)
+
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pagination.pageLimit}&page=${this.props.pagination.currentPage}`).then(response => {
             this.props.setUsers(response.data.items)
+
+            this.props.setIsFetching(false)
             let totalPages = Math.ceil(response.data.totalCount/this.props.pagination.pageLimit)
             this.props.setTotalPages(totalPages)
         })
@@ -52,13 +58,19 @@ class UsersApiComponent extends React.Component {
         }
 
         return (
-            <div> 
+            <div>
+                {
+                    this.props.isFetching 
+                    ? <Preloader />
+                    : null
+
+                } 
                 <ul className={css.pages}>
                     {
                         totalPages.map( p => {
                             return p===currentPage 
-                                    ?  <li className={css.page + " "  + css.active }>{p}</li>
-                                    :  <li className={css.page} onClick={(()=>{
+                                    ?  <li className={css.page + " "  + css.active } key={p}>{p}</li>
+                                    :  <li className={css.page}  key={p} onClick={(()=>{
                                         this.props.setPage(p)
                                         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pagination.pageLimit}&page=${p}`).then(response => {
                                             this.props.setUsers(response.data.items)

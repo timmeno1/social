@@ -1,11 +1,12 @@
 import {connect} from "react-redux";
 import UsersApiComponent from "./UsersAPIComponent";
-import {followAC, unfollowAC, setUsersAC, setPageAC, setTotalPagesAC} from "../../redux/usersReducer";
+import {followAC, unfollowAC, setUsersAC, setPageAC, setTotalPagesAC, setIsFetchingAC} from "../../redux/usersReducer";
 
 let mapStateToProps = (state) => {
     return {
         users: state.usersPage.users,
-        pagination: state.usersPage.pagination
+        pagination: state.usersPage.pagination,
+        isFetching: state.usersPage.isFetching
     }
 }
 
@@ -27,6 +28,9 @@ let mapDispatchToProps = (dispatch) => {
         },
         setTotalPages : (totalPages)=>{
             dispatch(setTotalPagesAC(totalPages))
+        },
+        setIsFetching : (isFetching) => {
+            dispatch(setIsFetchingAC(isFetching))
         }
     }
 }
