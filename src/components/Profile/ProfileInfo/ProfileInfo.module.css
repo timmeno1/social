@@ -1,13 +1,31 @@
 .cover img {
-    height:250px;
-    width:100%;
+    height:400px;
+}
+.cover {
+    width:fit-content;
+    margin-left:auto;
+    margin-right:auto;
 }
 
-.description img {
+.descriptionBlock img {
     width:120px;
     border-radius:50%;
 }
 
-.description {
+.descriptionBlock {
+    margin-left: 6%;
+    position:relative;
+    z-index:50;
     padding:10px;
+    top:-400px;
+    background-color: azure;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    border-radius: 10px;
+}
+
+.profileInfoBlock {
+    height:400px;
+    width:100%;
 }

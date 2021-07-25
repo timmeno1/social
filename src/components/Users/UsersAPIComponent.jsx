@@ -2,7 +2,7 @@ import React from 'react'
 import axios from "axios";
 import userPhoto from "../../assets/img/user.png"
 import css from './Users.module.css'
-import {Preloader} from './Preloader'
+import {Preloader} from '../common/Preloader'
 
 
 

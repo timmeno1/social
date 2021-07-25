@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import UsersApiComponent from "./UsersAPIComponent";
-import {followAC, unfollowAC, setUsersAC, setPageAC, setTotalPagesAC, setIsFetchingAC} from "../../redux/usersReducer";
+import {follow, unfollow, setUsers, setPage, setTotalPages, setIsFetching} from "../../redux/usersReducer";
 
 let mapStateToProps = (state) => {
     return {
@@ -11,31 +11,8 @@ let mapStateToProps = (state) => {
 }
 
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        follow : (userId)=> {
-            dispatch(followAC(userId))
-        },
-        unfollow : (userId)=> {
 
-            dispatch(unfollowAC(userId))
-        },
-        setUsers : (users)=> {
-            dispatch(setUsersAC(users))
-        },
-        setPage : (page)=>{
-            dispatch(setPageAC(page))
-        },
-        setTotalPages : (totalPages)=>{
-            dispatch(setTotalPagesAC(totalPages))
-        },
-        setIsFetching : (isFetching) => {
-            dispatch(setIsFetchingAC(isFetching))
-        }
-    }
-}
-
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersApiComponent);
+export default connect(mapStateToProps, 
+    {
+        follow, unfollow, setUsers, setPage, setTotalPages, setIsFetching
+    })(UsersApiComponent);

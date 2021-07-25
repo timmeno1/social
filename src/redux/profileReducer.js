@@ -1,6 +1,7 @@
 
 const ADD_NEW_POST = 'ADD-NEW-POST';
 const UPDATE_POST_TEXTAREA = 'UPDATE-POST-TEXTAREA'
+const SET_USER_PROFILE = 'SET_USER_PROFILE'
 
 let initialState = {
     PostsData : [
@@ -25,7 +26,8 @@ let initialState = {
             postLikes: 3
         }
     ],
-    newPostTextArea : ""
+    newPostTextArea : "",
+    profile: null
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -46,23 +48,21 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 newPostTextArea : action.newText
             }
+        case SET_USER_PROFILE:
+            return {
+                ...state,
+                profile: action.profile
+            }
         default:
             return state
     }
 }
 
 
-export const AddPostActionCreator = () => {
-    return {
-        type: ADD_NEW_POST
-    }
-}
+export const AddPostActionCreator = () => ({type: ADD_NEW_POST})
 
-export const UpdatePostActionCreator = (text) => {
+export const UpdatePostActionCreator = (text) => ({type: UPDATE_POST_TEXTAREA, newText:text})
 
-    return {
-        type: UPDATE_POST_TEXTAREA, newText:text
-    }
-}
+export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile })
 
 export default profileReducer
