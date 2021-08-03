@@ -2,6 +2,7 @@
 const ADD_NEW_POST = 'ADD-NEW-POST';
 const UPDATE_POST_TEXTAREA = 'UPDATE-POST-TEXTAREA'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
+const TOGGLE_ISFETCHING = 'TOGGLE_ISFETCHING'
 
 let initialState = {
     PostsData : [
@@ -27,7 +28,8 @@ let initialState = {
         }
     ],
     newPostTextArea : "",
-    profile: null
+    profile: null,
+    isProfileFetching : false
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -53,6 +55,11 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 profile: action.profile
             }
+        case TOGGLE_ISFETCHING:
+            return {
+                ...state,
+                isProfileFetching: action.isProfileFetching
+            }
         default:
             return state
     }
@@ -64,5 +71,7 @@ export const AddPostActionCreator = () => ({type: ADD_NEW_POST})
 export const UpdatePostActionCreator = (text) => ({type: UPDATE_POST_TEXTAREA, newText:text})
 
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile })
+
+export const setIsProfileFetching = (isProfileFetching) => ({type: TOGGLE_ISFETCHING, isProfileFetching})
 
 export default profileReducer

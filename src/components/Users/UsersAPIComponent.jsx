@@ -3,6 +3,7 @@ import axios from "axios";
 import userPhoto from "../../assets/img/user.png"
 import css from './Users.module.css'
 import {Preloader} from '../common/Preloader'
+import {NavLink} from 'react-router-dom'
 
 
 
@@ -14,7 +15,11 @@ let Users = (props) => {
     {
         props.users.map( u => <div key={u.id}>
             <span>
-                <div><img src={u.photos.small ? u.photos.small : userPhoto } alt="" width="100"/></div>
+                <div>
+                    <NavLink to={`/profile/${u.id}`}>
+                        <img onClick={""} src={u.photos.small ? u.photos.small : userPhoto } alt="" width="100"/>
+                    </NavLink>
+                </div>
                 <div>{
                     u.followed
                         ?   <button onClick={()=>props.unfollow(u.id)}>Unfollow</button>
