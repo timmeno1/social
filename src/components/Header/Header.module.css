@@ -2,8 +2,22 @@
 .header {
     grid-area:h;
     background-color: #fff8b1;
+    display:flex;
+    justify-content: space-between;
 }
 .header img {
     width:100px;
     height:100px;
+}
+
+.loginBlock {
+    padding:25px;
+}
+
+.loginButton {
+    background-color: rgb(124, 93, 26);
+    color: #fff;
+    font-size: 24px;
+    padding:10px 20px;
+    border-radius: 5px;
 }
