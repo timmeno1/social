@@ -9,12 +9,30 @@ import {Preloader} from '../common/Preloader'
 class ProfileContainer extends React.Component  {
 
     componentDidMount() {
-        let userId = this.props.match.params.userId ? this.props.match.params.userId : 2
+
+        let userId = null
         this.props.setIsProfileFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(response => {
-            this.props.setUserProfile(response.data)
-            this.props.setIsProfileFetching(false)
-        })
+
+        if(this.props.match.params.userId) {
+            userId = this.props.match.params.userId
+
+            axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(response => {
+                this.props.setUserProfile(response.data)
+                this.props.setIsProfileFetching(false)
+            })
+        } else {
+            axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials: true}).then(response => {
+                if(response.data.resultCode === 0 ) {
+                    userId = response.data.data.id
+
+                axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(response => {
+                    this.props.setUserProfile(response.data)
+                    this.props.setIsProfileFetching(false)
+                })
+                }
+            })
+        }
+
     }
 
     render () {
@@ -30,7 +48,8 @@ let mapStateToProps = (state) => ({
     postsData: state.profilePage.PostsData, 
     newPostTextArea: state.profilePage.newPostTextArea,
     profile: state.profilePage.profile,
-    isProfileFetching: state.profilePage.isProfileFetching
+    isProfileFetching: state.profilePage.isProfileFetching,
+    authData: state.authData
 })
 
 const withUrlDataContainerComponent = withRouter(ProfileContainer)
