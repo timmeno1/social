@@ -4,6 +4,7 @@ import userPhoto from "../../assets/img/user.png"
 import css from './Users.module.css'
 import {Preloader} from '../common/Preloader'
 import {NavLink} from 'react-router-dom'
+import {follow, getUsers, unfollow} from "../../api/api";
 
 
 
@@ -14,24 +15,39 @@ let Users = (props) => {
             
     {
         props.users.map( u => <div key={u.id}>
-            <span>
+            <div>
                 <div>
                     <NavLink to={`/profile/${u.id}`}>
-                        <img onClick={""} src={u.photos.small ? u.photos.small : userPhoto } alt="" width="100"/>
+                        <img src={u.photos.small ? u.photos.small : userPhoto } alt="" width="100"/>
                     </NavLink>
                 </div>
                 <div>{
                     u.followed
-                        ?   <button onClick={()=>props.unfollow(u.id)}>Unfollow</button>
-                        :   <button onClick={()=>props.follow(u.id)}>Follow</button>
+                        ?   <button onClick={()=> {
+                            unfollow(u.id)
+                                .then(response => {
+                                if(response.data.resultCode === 0 ) {
+                                    props.unfollow(u.id)
+                                } else console.log(response.data)
+
+                            })
+                        }}>Unfollow</button>
+                        :   <button onClick={()=> {
+                            follow(u.id)
+                                .then(response => {
+                                if(response.data.resultCode === 0 ) {
+                                    props.follow(u.id)
+                                } else console.log(response.data)
+                            })
+                        }}>Follow</button>
                 }</div>
-                </span>
-                        <span>
+                </div>
+                        <div>
                 <span>
                 <div>{u.name}</div>
                 <div>{u.status}</div>
                 </span>
-            </span>
+            </div>
         </div>)
     }
     </div>;
@@ -44,7 +60,7 @@ class UsersApiComponent extends React.Component {
 
         this.props.setIsFetching(true)
 
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pagination.pageLimit}&page=${this.props.pagination.currentPage}`).then(response => {
+        getUsers().then(response => {
             this.props.setUsers(response.data.items)
 
             this.props.setIsFetching(false)
@@ -58,7 +74,7 @@ class UsersApiComponent extends React.Component {
         let currentPage = this.props.pagination.currentPage
         let totalPages = []
 
-        for(let i=1; i<=this.props.pagination.totalPages; i++) {
+        for(let i=1; i<=100; i++) {
             totalPages.push(i)
         }
 
@@ -77,7 +93,7 @@ class UsersApiComponent extends React.Component {
                                     ?  <li className={css.page + " "  + css.active } key={p}>{p}</li>
                                     :  <li className={css.page}  key={p} onClick={(()=>{
                                         this.props.setPage(p)
-                                        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pagination.pageLimit}&page=${p}`).then(response => {
+                                        getUsers(p, this.props.pagination.pageLimit).then(response => {
                                             this.props.setUsers(response.data.items)
                                         })
                                     })}>{p}</li>

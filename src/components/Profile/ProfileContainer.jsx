@@ -5,6 +5,7 @@ import {connect} from "react-redux"
 import {setUserProfile, setIsProfileFetching} from "../../redux/profileReducer"
 import { withRouter } from "react-router-dom";
 import {Preloader} from '../common/Preloader'
+import {authMe, getUserProfile} from "../../api/api";
 
 class ProfileContainer extends React.Component  {
 
@@ -16,19 +17,19 @@ class ProfileContainer extends React.Component  {
         if(this.props.match.params.userId) {
             userId = this.props.match.params.userId
 
-            axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(response => {
+            getUserProfile(userId).then(response => {
                 this.props.setUserProfile(response.data)
                 this.props.setIsProfileFetching(false)
             })
         } else {
-            axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials: true}).then(response => {
+            authMe().then(response => {
                 if(response.data.resultCode === 0 ) {
                     userId = response.data.data.id
 
-                axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(response => {
-                    this.props.setUserProfile(response.data)
-                    this.props.setIsProfileFetching(false)
-                })
+                    getUserProfile(userId).then(response => {
+                        this.props.setUserProfile(response.data)
+                        this.props.setIsProfileFetching(false)
+                    })
                 }
             })
         }
