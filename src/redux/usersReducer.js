@@ -5,6 +5,7 @@ const SET_USERS = 'SET_USERS';
 const SET_PAGE = 'SET_PAGE';
 const SET_TOTAL_PAGES = 'SET_TOTAL_PAGES'
 const TOGGLE_ISFETCHING = 'TOGGLE_ISFETCHING'
+const TOGGLE_FOLLOWINGINPROGRESS = 'TOGGLE_FOLLOWINGINPROGRESS'
 
 
 let initialState = {
@@ -14,7 +15,8 @@ let initialState = {
         totalPages: 0,
         pageLimit: 10
     },
-    isFetching: false
+    isFetching: false,
+    followingInProgress: []
 }
 
 const userReducer = (state = initialState, action) => {
@@ -29,7 +31,6 @@ const userReducer = (state = initialState, action) => {
                     return u
                 })
             }
-
         case UNFOLLOW:
             return {
                 ...state,
@@ -40,10 +41,8 @@ const userReducer = (state = initialState, action) => {
                     return u
                 })
             }
-
         case SET_USERS:
             return {...state, users: [...action.users]}
-
         case SET_PAGE:
             return {
                 ...state,
@@ -52,7 +51,6 @@ const userReducer = (state = initialState, action) => {
                     currentPage: action.page
                 }
             }
-
         case SET_TOTAL_PAGES:
             return {
                 ...state,
@@ -61,13 +59,18 @@ const userReducer = (state = initialState, action) => {
                     totalPages: action.totalPages
                 }
             }
-         
-        
         case TOGGLE_ISFETCHING:
             return {
                 ...state,
                 isFetching: action.isFetching
-            }    
+            }
+        case TOGGLE_FOLLOWINGINPROGRESS:
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId )
+            }
 
         default:
             return state
@@ -113,6 +116,12 @@ export const setIsFetching = (isFetching) => {
     return {
         type: TOGGLE_ISFETCHING,
         isFetching
+    }
+}
+export const setFollowingInProgress = (isFetching, userId) => {
+    return {
+        type: TOGGLE_FOLLOWINGINPROGRESS,
+        isFetching, userId
     }
 }
 

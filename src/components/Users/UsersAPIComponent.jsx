@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from "axios";
 import userPhoto from "../../assets/img/user.png"
 import css from './Users.module.css'
 import {Preloader} from '../common/Preloader'
@@ -8,11 +7,9 @@ import {follow, getUsers, unfollow} from "../../api/api";
 
 
 
-
 let Users = (props) => {
 
     return <div>
-            
     {
         props.users.map( u => <div key={u.id}>
             <div>
@@ -23,23 +20,24 @@ let Users = (props) => {
                 </div>
                 <div>{
                     u.followed
-                        ?   <button onClick={()=> {
-                            unfollow(u.id)
-                                .then(response => {
+                        ?   <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={()=> {
+                            props.setFollowingInProgress(true, u.id)
+                            unfollow(u.id).then(response => {
+                                props.setFollowingInProgress(false, u.id)
                                 if(response.data.resultCode === 0 ) {
                                     props.unfollow(u.id)
                                 } else console.log(response.data)
-
                             })
                         }}>Unfollow</button>
-                        :   <button onClick={()=> {
-                            follow(u.id)
-                                .then(response => {
-                                if(response.data.resultCode === 0 ) {
-                                    props.follow(u.id)
-                                } else console.log(response.data)
-                            })
-                        }}>Follow</button>
+                        :   <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={()=> {
+                            props.setFollowingInProgress(true, u.id)
+                            follow(u.id).then(response => {
+                                    props.setFollowingInProgress(false, u.id)
+                                    if(response.data.resultCode === 0 ) {
+                                        props.follow(u.id)
+                                    } else console.log(response.data)
+                                })
+                            }}>Follow</button>
                 }</div>
                 </div>
                         <div>
@@ -62,6 +60,7 @@ class UsersApiComponent extends React.Component {
 
         getUsers().then(response => {
             this.props.setUsers(response.data.items)
+            //this.props.setFollowingInProgress()
 
             this.props.setIsFetching(false)
             let totalPages = Math.ceil(response.data.totalCount/this.props.pagination.pageLimit)
@@ -99,8 +98,13 @@ class UsersApiComponent extends React.Component {
                                     })}>{p}</li>
                         })
                     }
-                </ul> 
-                <Users users={this.props.users} follow={this.props.follow} unfollow={this.props.unfollow}/>
+                </ul>
+                <Users users={this.props.users}
+                       follow={this.props.follow}
+                       unfollow={this.props.unfollow}
+                       followingInProgress={this.props.followingInProgress}
+                       setFollowingInProgress={this.props.setFollowingInProgress}
+                />
             </div>
         )
     }

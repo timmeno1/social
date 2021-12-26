@@ -1,12 +1,21 @@
 import {connect} from "react-redux";
 import UsersApiComponent from "./UsersAPIComponent";
-import {follow, unfollow, setUsers, setPage, setTotalPages, setIsFetching} from "../../redux/usersReducer";
+import {
+    follow,
+    unfollow,
+    setUsers,
+    setPage,
+    setTotalPages,
+    setIsFetching,
+    setFollowingInProgress
+} from "../../redux/usersReducer";
 
 let mapStateToProps = (state) => {
     return {
         users: state.usersPage.users,
         pagination: state.usersPage.pagination,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -14,5 +23,5 @@ let mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, 
     {
-        follow, unfollow, setUsers, setPage, setTotalPages, setIsFetching
+        follow, unfollow, setUsers, setPage, setTotalPages, setIsFetching, setFollowingInProgress
     })(UsersApiComponent);
